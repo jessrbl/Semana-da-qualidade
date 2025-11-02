@@ -1,10 +1,19 @@
+// ==============================
+// DRAG & DROP - MOBILE
+// ==============================
+
+// Contadores para tentativas e erros
 let totalTentativas = 0;
 let totalErros = 0;
+
+// Variável global para toque em mobile
 let draggedElement = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
 
-// --- TOUCH START ---
+// ----------------------
+// Touch Start
+// ----------------------
 function touchStartHandler(ev) {
   draggedElement = ev.target;
   draggedElement.classList.add("dragging");
@@ -18,7 +27,11 @@ function touchStartHandler(ev) {
   // salvar container original
   draggedElement.dataset.initialParent = draggedElement.parentNode.className;
 
-  // move para body
+  // salva tamanho original
+  draggedElement.dataset.width = rect.width;
+  draggedElement.dataset.height = rect.height;
+
+  // move para body para poder posicionar livremente
   document.body.appendChild(draggedElement);
 
   // garante posição absoluta inicial
@@ -27,24 +40,34 @@ function touchStartHandler(ev) {
   draggedElement.style.top = (touch.clientY - touchOffsetY) + "px";
   draggedElement.style.zIndex = 1000;
   draggedElement.style.pointerEvents = "none";
+
+  // força tamanho original
+  draggedElement.style.width = rect.width + "px";
+  draggedElement.style.height = rect.height + "px";
 }
 
-// --- TOUCH MOVE ---
+// ----------------------
+// Touch Move
+// ----------------------
 function touchMoveHandler(ev) {
   ev.preventDefault();
   if (!draggedElement) return;
   const touch = ev.touches[0];
+
   draggedElement.style.left = (touch.clientX - touchOffsetX) + "px";
   draggedElement.style.top = (touch.clientY - touchOffsetY) + "px";
 }
 
-// --- TOUCH END ---
+// ----------------------
+// Touch End
+// ----------------------
 function touchEndHandler(ev) {
   const touch = ev.changedTouches[0];
-  if (!draggedElement) return;
   draggedElement.classList.remove("dragging");
 
   let cardEncontrado = null;
+
+  // verifica se o dedo está dentro de algum card
   document.querySelectorAll(".card").forEach(card => {
     const rect = card.getBoundingClientRect();
     if (
@@ -57,33 +80,43 @@ function touchEndHandler(ev) {
     }
   });
 
+  const draggedId = draggedElement.id;
   totalTentativas++;
 
   if (cardEncontrado) {
     const aceita = cardEncontrado.dataset.accept?.split(",").map(s => s.trim());
-    if (aceita && aceita.includes(draggedElement.id)) {
+    if (aceita && aceita.includes(draggedId)) {
       cardEncontrado.querySelector(".card-objects").appendChild(draggedElement);
     } else {
       totalErros++;
       alert("Figura não corresponde a este card!");
-      document.querySelector(`.${draggedElement.dataset.initialParent} .objects`).appendChild(draggedElement);
+      // volta para container original
+      const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
+      if (originalParent) originalParent.appendChild(draggedElement);
     }
   } else {
-    document.querySelector(`.${draggedElement.dataset.initialParent} .objects`).appendChild(draggedElement);
+    // soltou fora de qualquer card, volta para o container original
+    const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
+    if (originalParent) originalParent.appendChild(draggedElement);
   }
 
-  // reset estilo
+  // reseta estilo da figura
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
   draggedElement.style.zIndex = "";
   draggedElement.style.pointerEvents = "";
+  draggedElement.style.width = "";
+  draggedElement.style.height = "";
+
   draggedElement = null;
 
   verificarFinal();
 }
 
-// --- FINAL ---
+// ----------------------
+// Função para verificar fim do jogo
+// ----------------------
 function verificarFinal() {
   const allCards = document.querySelectorAll(".card");
   const totalFiguras = document.querySelectorAll(".draggable").length;
@@ -94,16 +127,18 @@ function verificarFinal() {
   });
 
   if (colocadas === totalFiguras) {
-    setTimeout(() => {
-      mostrarResultadoNoObjects(Math.round((totalTentativas - totalErros)/totalTentativas*100));
-    }, 300);
+    // calcula percentual de acertos
+    const percentual = Math.round(((totalTentativas - totalErros) / totalTentativas) * 100);
+    mostrarResultadoNoObjects(percentual);
   }
 }
 
-// --- MOSTRAR RESULTADO ---
+// ----------------------
+// Mostrar resultado dentro do container .objects
+// ----------------------
 function mostrarResultadoNoObjects(percentual) {
   const objectsContainer = document.querySelector(".objects");
-  objectsContainer.innerHTML = "";
+  objectsContainer.innerHTML = ""; // limpa figuras
 
   const resultadoTexto = document.createElement("div");
   resultadoTexto.style.textAlign = "center";
@@ -127,16 +162,21 @@ function mostrarResultadoNoObjects(percentual) {
     btn.style.color = "#fff";
     btn.style.cursor = "pointer";
     btn.style.marginTop = "15px";
+
     btn.addEventListener("mouseover", () => btn.style.backgroundColor = "#45a049");
     btn.addEventListener("mouseout", () => btn.style.backgroundColor = "#4CAF50");
+
     btn.addEventListener("click", () => location.reload());
   }
 
   objectsContainer.appendChild(resultadoTexto);
 }
 
-// --- EVENTOS ---
-document.querySelectorAll(".draggable").forEach(img => {
+// ----------------------
+// Eventos Touch
+// ----------------------
+const figures = document.querySelectorAll(".draggable");
+figures.forEach(img => {
   img.addEventListener("touchstart", touchStartHandler, { passive: false });
   img.addEventListener("touchmove", touchMoveHandler, { passive: false });
   img.addEventListener("touchend", touchEndHandler);
