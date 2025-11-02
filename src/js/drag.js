@@ -138,7 +138,7 @@ function mostrarResultadoNoObjects(percentual) {
 
     const btn = resultadoTexto.querySelector("#restart-btn");
     btn.style.padding = "10px 20px";
-    btn.style.fontSize = "16px";
+    btn.style.fontSize = "20px";
     btn.style.border = "none";
     btn.style.borderRadius = "8px";
     btn.style.backgroundColor = "#4CAF50";
