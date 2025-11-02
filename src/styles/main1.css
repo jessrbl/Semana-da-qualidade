@@ -133,6 +133,10 @@
 .card-content ul {
   margin: 1vh 0 1.5vh 0;
   padding-left: 4vw;
+  list-style-type: disc;       /* volta as bolinhas */
+  list-style-position: outside; /* marcador fora do texto */
+  padding-left: 2em;            /* recuo pro marcador aparecer */
+  margin: 1vh 0 1.5vh 0;
 }
 
 .card-content li {
@@ -146,6 +150,4 @@
   font-size: 1em;
 }
 
-.card-content li::marker {
-  color: rgba(255, 255, 255, 0.9);
-}
+
