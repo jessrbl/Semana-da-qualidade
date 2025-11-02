@@ -2,26 +2,19 @@
 // DRAG & DROP - MOBILE
 // ==============================
 
-// Contadores para tentativas e erros
 let totalTentativas = 0;
 let totalErros = 0;
-
-// Variável global para toque em mobile
 let draggedElement = null;
+let originalParent = null; // salvando o pai real
 
-// ----------------------
 // Touch Start
-// ----------------------
 function touchStartHandler(ev) {
   draggedElement = ev.target;
   draggedElement.classList.add("dragging");
-  // salva posição inicial para voltar caso necessário
-  draggedElement.dataset.initialParent = draggedElement.parentNode.className;
+  originalParent = draggedElement.parentNode; // salva pai real
 }
 
-// ----------------------
 // Touch Move
-// ----------------------
 function touchMoveHandler(ev) {
   ev.preventDefault();
   const touch = ev.touches[0];
@@ -32,16 +25,13 @@ function touchMoveHandler(ev) {
   draggedElement.style.zIndex = 1000;
 }
 
-// ----------------------
 // Touch End
-// ----------------------
 function touchEndHandler(ev) {
   const touch = ev.changedTouches[0];
   draggedElement.classList.remove("dragging");
 
   let cardEncontrado = null;
 
-  // Verifica cada card se o toque caiu dentro dele
   document.querySelectorAll(".card").forEach(card => {
     const rect = card.getBoundingClientRect();
     if (
@@ -64,17 +54,14 @@ function touchEndHandler(ev) {
     } else {
       totalErros++;
       alert("Figura não corresponde a este card!");
-      // opcional: volta para o container original
-      const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
-      if (originalParent) originalParent.appendChild(draggedElement);
+      originalParent.appendChild(draggedElement); // volta ao pai original
     }
   } else {
-    // soltou fora de qualquer card, volta para o container original
-    const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
-    if (originalParent) originalParent.appendChild(draggedElement);
+    // soltou fora de qualquer card
+    originalParent.appendChild(draggedElement);
   }
 
-  // Reseta estilo da figura
+  // Reseta estilo
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
@@ -84,9 +71,7 @@ function touchEndHandler(ev) {
   verificarFinal();
 }
 
-// ----------------------
-// Função para verificar fim do jogo
-// ----------------------
+// Verifica fim do jogo
 function verificarFinal() {
   const allCards = document.querySelectorAll(".card");
   const totalFiguras = document.querySelectorAll(".draggable").length;
@@ -103,9 +88,7 @@ function verificarFinal() {
   }
 }
 
-// ----------------------
 // Eventos Touch
-// ----------------------
 const figures = document.querySelectorAll(".draggable");
 figures.forEach(img => {
   img.addEventListener("touchstart", touchStartHandler, { passive: false });
