@@ -2,18 +2,15 @@
 // DRAG & DROP - MOBILE
 // ==============================
 
-// Contadores para tentativas e erros
 let totalTentativas = 0;
 let totalErros = 0;
 
-// Variável global para toque em mobile
 let draggedElement = null;
 let touchOffsetX = 0;
 let touchOffsetY = 0;
+let originalParent = null;
 
-// ----------------------
 // Touch Start
-// ----------------------
 function touchStartHandler(ev) {
   draggedElement = ev.target;
   draggedElement.classList.add("dragging");
@@ -24,31 +21,22 @@ function touchStartHandler(ev) {
   touchOffsetX = touch.clientX - rect.left;
   touchOffsetY = touch.clientY - rect.top;
 
-  // salvar container original
-  draggedElement.dataset.initialParent = draggedElement.parentNode.className;
+  // guarda container original
+  originalParent = draggedElement.parentNode;
 
-  // salva tamanho original
-  draggedElement.dataset.width = rect.width;
-  draggedElement.dataset.height = rect.height;
-
-  // move para body para poder posicionar livremente
-  document.body.appendChild(draggedElement);
-
-  // garante posição absoluta inicial
-  draggedElement.style.position = "absolute";
-  draggedElement.style.left = (touch.clientX - touchOffsetX) + "px";
-  draggedElement.style.top = (touch.clientY - touchOffsetY) + "px";
+  // garante que a figura fique fixa em relação à tela
+  draggedElement.style.position = "fixed";
+  draggedElement.style.left = rect.left + "px";
+  draggedElement.style.top = rect.top + "px";
   draggedElement.style.zIndex = 1000;
   draggedElement.style.pointerEvents = "none";
 
-  // força tamanho original
+  // mantém tamanho original
   draggedElement.style.width = rect.width + "px";
   draggedElement.style.height = rect.height + "px";
 }
 
-// ----------------------
 // Touch Move
-// ----------------------
 function touchMoveHandler(ev) {
   ev.preventDefault();
   if (!draggedElement) return;
@@ -58,16 +46,13 @@ function touchMoveHandler(ev) {
   draggedElement.style.top = (touch.clientY - touchOffsetY) + "px";
 }
 
-// ----------------------
 // Touch End
-// ----------------------
 function touchEndHandler(ev) {
   const touch = ev.changedTouches[0];
   draggedElement.classList.remove("dragging");
 
   let cardEncontrado = null;
 
-  // verifica se o dedo está dentro de algum card
   document.querySelectorAll(".card").forEach(card => {
     const rect = card.getBoundingClientRect();
     if (
@@ -90,17 +75,14 @@ function touchEndHandler(ev) {
     } else {
       totalErros++;
       alert("Figura não corresponde a este card!");
-      // volta para container original
-      const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
-      if (originalParent) originalParent.appendChild(draggedElement);
+      originalParent.appendChild(draggedElement);
     }
   } else {
-    // soltou fora de qualquer card, volta para o container original
-    const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
-    if (originalParent) originalParent.appendChild(draggedElement);
+    // soltou fora de qualquer card, volta para container original
+    originalParent.appendChild(draggedElement);
   }
 
-  // reseta estilo da figura
+  // reseta estilo
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
@@ -114,9 +96,7 @@ function touchEndHandler(ev) {
   verificarFinal();
 }
 
-// ----------------------
 // Função para verificar fim do jogo
-// ----------------------
 function verificarFinal() {
   const allCards = document.querySelectorAll(".card");
   const totalFiguras = document.querySelectorAll(".draggable").length;
@@ -127,15 +107,12 @@ function verificarFinal() {
   });
 
   if (colocadas === totalFiguras) {
-    // calcula percentual de acertos
     const percentual = Math.round(((totalTentativas - totalErros) / totalTentativas) * 100);
     mostrarResultadoNoObjects(percentual);
   }
 }
 
-// ----------------------
 // Mostrar resultado dentro do container .objects
-// ----------------------
 function mostrarResultadoNoObjects(percentual) {
   const objectsContainer = document.querySelector(".objects");
   objectsContainer.innerHTML = ""; // limpa figuras
@@ -172,9 +149,7 @@ function mostrarResultadoNoObjects(percentual) {
   objectsContainer.appendChild(resultadoTexto);
 }
 
-// ----------------------
 // Eventos Touch
-// ----------------------
 const figures = document.querySelectorAll(".draggable");
 figures.forEach(img => {
   img.addEventListener("touchstart", touchStartHandler, { passive: false });
