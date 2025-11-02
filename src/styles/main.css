@@ -105,6 +105,17 @@ body {
   cursor: grab;
 }
 
+.draggable.dragging {
+  position: absolute !important; /* necessário para seguir o dedo */
+  z-index: 1000;
+  pointer-events: none; /* evita problemas de toque em outros elementos */
+  opacity: 0.8;
+  transform: none !important; /* remove qualquer translate */
+  width: auto; /* mantém tamanho original */
+  height: auto;
+}
+
+
 .card-objects img:hover {
   transform: none !important;
   box-shadow: none !important;
@@ -181,14 +192,6 @@ body {
   width: 60px;
 }
 
-/* ======================
-   DRAGGING
-====================== */
-.draggable.dragging {
-  opacity: 0.5;
-  transform: none !important;
-  transition: none !important;
-}
 
 /* ======================
    CARDS COM DUAS COLUNAS
