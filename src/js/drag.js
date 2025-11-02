@@ -124,20 +124,28 @@ function mostrarResultadoNoObjects(percentual) {
   objectsContainer.innerHTML = "";
 
   const resultadoTexto = document.createElement("div");
+  resultadoTexto.className = "resultado-container"; // Adicione uma classe
   resultadoTexto.style.textAlign = "center";
-  resultadoTexto.style.padding = "20px";
+  resultadoTexto.style.padding = "30px";
   resultadoTexto.style.borderRadius = "12px";
   resultadoTexto.style.background = "#f0f0f0";
   resultadoTexto.style.width = "100%";
+  resultadoTexto.style.boxSizing = "border-box";
 
   if (percentual >= 70) {
-    resultadoTexto.innerHTML = `<h2>Parabéns! 🎉</h2><p>Você acertou ${percentual}% das tentativas.</p>`;
+    resultadoTexto.innerHTML = `
+      <h2 style="font-size: 28px; margin: 0 0 15px 0; color: #2e7d32;">Parabéns! 🎉</h2>
+      <p style="font-size: 22px; margin: 0; color: #333;">Você acertou ${percentual}% das tentativas.</p>
+    `;
   } else {
-    resultadoTexto.innerHTML = `<h2>Ops!</h2><p>Você acertou apenas ${percentual}% das tentativas.</p>
-    <button id="restart-btn">Recomeçar</button>`;
+    resultadoTexto.innerHTML = `
+      <h2 style="font-size: 28px; margin: 0 0 15px 0; color: #c62828;">Ops! 😅</h2>
+      <p style="font-size: 22px; margin: 0 0 20px 0; color: #333;">Você acertou apenas ${percentual}% das tentativas.</p>
+      <button id="restart-btn">Recomeçar</button>
+    `;
 
     const btn = resultadoTexto.querySelector("#restart-btn");
-    btn.style.padding = "10px 20px";
+    btn.style.padding = "12px 25px";
     btn.style.fontSize = "20px";
     btn.style.border = "none";
     btn.style.borderRadius = "8px";
@@ -145,6 +153,7 @@ function mostrarResultadoNoObjects(percentual) {
     btn.style.color = "#fff";
     btn.style.cursor = "pointer";
     btn.style.marginTop = "15px";
+    btn.style.fontWeight = "bold";
 
     btn.addEventListener("mouseover", () => btn.style.backgroundColor = "#45a049");
     btn.addEventListener("mouseout", () => btn.style.backgroundColor = "#4CAF50");
@@ -152,6 +161,13 @@ function mostrarResultadoNoObjects(percentual) {
   }
 
   objectsContainer.appendChild(resultadoTexto);
+  
+  // Garantir que a right-column mantenha o alinhamento
+  const rightColumn = document.querySelector('.right-column');
+  rightColumn.style.display = 'flex';
+  rightColumn.style.flexDirection = 'column';
+  rightColumn.style.alignItems = 'center';
+  rightColumn.style.justifyContent = 'center';
 }
 
 // ----------------------
