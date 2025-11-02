@@ -16,7 +16,7 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
-  gap: 50px; /* distância horizontal entre cards e coluna direita */
+  gap: 40px; /* distância horizontal entre cards e coluna direita */
   width: 90vw;
   margin: 30px auto;
 }
