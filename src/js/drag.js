@@ -126,7 +126,7 @@ function mostrarResultadoNoObjects(percentual) {
   const resultadoTexto = document.createElement("div");
   resultadoTexto.className = "resultado-container"; // Adicione uma classe
   resultadoTexto.style.textAlign = "center";
-  resultadoTexto.style.padding = "30px";
+  resultadoTexto.style.padding = "20px";
   resultadoTexto.style.borderRadius = "12px";
   resultadoTexto.style.background = "#f0f0f0";
   resultadoTexto.style.width = "100%";
