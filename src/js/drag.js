@@ -1,7 +1,3 @@
-// ==============================
-// DRAG & DROP - MOBILE
-// ==============================
-
 let totalTentativas = 0;
 let totalErros = 0;
 
@@ -16,18 +12,13 @@ let touchOffsetY = 0;
 function touchStartHandler(ev) {
   draggedElement = ev.target;
   draggedElement.classList.add("dragging");
-
-  // salva o pai original
   originalParent = draggedElement.parentNode;
 
   const touch = ev.touches[0];
   const rect = draggedElement.getBoundingClientRect();
-
-  // calcula o offset do ponto de toque dentro da figura
   touchOffsetX = touch.clientX - rect.left;
   touchOffsetY = touch.clientY - rect.top;
 
-  // garante posição absoluta inicial
   draggedElement.style.position = "absolute";
   draggedElement.style.zIndex = 1000;
 }
@@ -38,8 +29,6 @@ function touchStartHandler(ev) {
 function touchMoveHandler(ev) {
   ev.preventDefault();
   const touch = ev.touches[0];
-
-  // posiciona a figura alinhada com o dedo
   draggedElement.style.left = touch.clientX - touchOffsetX + "px";
   draggedElement.style.top = touch.clientY - touchOffsetY + "px";
 }
@@ -48,23 +37,12 @@ function touchMoveHandler(ev) {
 // Touch End
 // ----------------------
 function touchEndHandler(ev) {
-  const touch = ev.changedTouches[0];
   draggedElement.classList.remove("dragging");
+  const touch = ev.changedTouches[0];
 
-  let cardEncontrado = null;
-
-  // verifica se o ponto do toque está dentro de algum card
-  document.querySelectorAll(".card").forEach(card => {
-    const rect = card.getBoundingClientRect();
-    if (
-      touch.clientX >= rect.left &&
-      touch.clientX <= rect.right &&
-      touch.clientY >= rect.top &&
-      touch.clientY <= rect.bottom
-    ) {
-      cardEncontrado = card;
-    }
-  });
+  // Detecta todos os elementos sob o ponto do toque
+  const elementsAtPoint = document.elementsFromPoint(touch.clientX, touch.clientY);
+  let cardEncontrado = elementsAtPoint.find(el => el.classList.contains("card"));
 
   const draggedId = draggedElement.id;
   totalTentativas++;
@@ -83,7 +61,6 @@ function touchEndHandler(ev) {
     originalParent.appendChild(draggedElement);
   }
 
-  // reseta estilos
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
