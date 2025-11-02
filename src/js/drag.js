@@ -16,11 +16,18 @@ function touchStartHandler(ev) {
 
   const touch = ev.touches[0];
   const rect = draggedElement.getBoundingClientRect();
+
+  // offset do ponto de toque dentro da figura
   touchOffsetX = touch.clientX - rect.left;
   touchOffsetY = touch.clientY - rect.top;
 
+  // posicionamento absoluto
   draggedElement.style.position = "absolute";
   draggedElement.style.zIndex = 1000;
+
+  // coloca figura na frente imediatamente
+  draggedElement.style.left = touch.clientX - touchOffsetX + "px";
+  draggedElement.style.top = touch.clientY - touchOffsetY + "px";
 }
 
 // ----------------------
@@ -29,6 +36,7 @@ function touchStartHandler(ev) {
 function touchMoveHandler(ev) {
   ev.preventDefault();
   const touch = ev.touches[0];
+
   draggedElement.style.left = touch.clientX - touchOffsetX + "px";
   draggedElement.style.top = touch.clientY - touchOffsetY + "px";
 }
@@ -40,7 +48,7 @@ function touchEndHandler(ev) {
   draggedElement.classList.remove("dragging");
   const touch = ev.changedTouches[0];
 
-  // Detecta todos os elementos sob o ponto do toque
+  // Detecta elementos sob o ponto do toque
   const elementsAtPoint = document.elementsFromPoint(touch.clientX, touch.clientY);
   let cardEncontrado = elementsAtPoint.find(el => el.classList.contains("card"));
 
@@ -57,7 +65,6 @@ function touchEndHandler(ev) {
       originalParent.appendChild(draggedElement);
     }
   } else {
-    // soltou fora de qualquer card
     originalParent.appendChild(draggedElement);
   }
 
@@ -74,7 +81,7 @@ function touchEndHandler(ev) {
 }
 
 // ----------------------
-// Verifica fim do jogo
+// Fim do jogo
 // ----------------------
 function verificarFinal() {
   const allCards = document.querySelectorAll(".card");
