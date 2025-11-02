@@ -1,15 +1,15 @@
 .navbar {
     max-width: 100%;
     margin: auto;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     background-color: #0B194A;
     
     display: flex;
     justify-content: space-between;
     align-items: center;
     box-sizing: border-box;
-    height: 70px;
-    gap: 20px;
+    height: 50px;
+    gap: 5px;
 }
 
 .nav-actions {
@@ -21,11 +21,11 @@
     display: inline-block;
     background: transparent;
     color: white;
-    padding: 10px 20px;
+    padding: 10px 10px;
     border-radius: 25px;
     text-decoration: none;
     font-family: Arial, sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.5rem;
     font-weight: bold;
     transition: all 0.3s ease;
     border: 2px solid white;
@@ -44,7 +44,7 @@
 
 
 .image-container {
-    width: 110px;
+    width: 70px;
     height: auto;
     flex-shrink: 0;
 }
@@ -58,7 +58,7 @@
 .page-title {
     color: white;
     font-family: Arial, sans-serif;
-    font-size: 1.5rem;
+    font-size: 0.9rem;
     font-weight: bold;
     text-align: center;
     margin: 0;

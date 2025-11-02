@@ -1,3 +1,6 @@
+/* ======================
+   ESTILO GLOBAL
+====================== */
 body {
   font-family: Arial, sans-serif;
   background: #f8f8f8;
@@ -5,56 +8,56 @@ body {
   padding: 0;
 }
 
+/* ======================
+   LAYOUT PRINCIPAL
+====================== */
 .main-container {
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: flex-start;
-  gap: 80px; /* aumenta o espaço entre left e right column */
+  gap: 60px; /* distância horizontal entre cards e coluna direita */
   width: 90vw;
-  margin: 30px auto;
+  margin: 50px auto;
 }
 
-/* Right column mais à direita */
-.right-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 40px 30px;
-  margin-left: 40px; /* opcional, empurra ainda mais para direita */
-}
-/* Cards */
+/* ======================
+   CARDS
+====================== */
 .cards {
   display: grid;
-  grid-template-columns: repeat(2, 200px);
-  gap: 20px 60px;
+  grid-template-columns: repeat(2, 230px);
+  gap: 60px 80px; /* 60px vertical, 80px horizontal */
 }
 
 .card {
   position: relative;
-  width: 200px;
+  width: 230px;
   min-height: 260px;
-  background: #eaeaea;
   border-radius: 8px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 40px;
+  padding-top: 60px;
   gap: 5px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+  background: #eaeaea; /* fallback caso o gradiente falhe */
 }
 
 .card-objects {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 5px 10px 20px 40px;
+  gap: 10px 15px;
   width: 100%;
-  max-height: 200px;
+  max-height: 300px;
   overflow-y: auto;
   padding-bottom: 5px;
 }
 
-/* Ícone e título */
+/* ======================
+   ÍCONE E TÍTULO
+====================== */
 .icon {
   position: absolute;
   top: -30px;
@@ -67,30 +70,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
 }
 
 .icon img { max-width: 40px; }
 
 .card h3 {
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: bold;
   color: #fff;
   margin: 0;
-  background: inherit;
-  padding: 5px 0;
   width: 100%;
   text-align: center;
+  padding: 8px 0;
   border-radius: 0 0 8px 8px;
+  background: inherit;
 }
 
-/* Cores dos cards */
+/* ======================
+   CORES DOS CARDS
+====================== */
 .pink { background: linear-gradient(to bottom, #e91e63 60px, #f8d6e0 60px); }
 .blue { background: linear-gradient(to bottom, #1a237e 60px, #d0d6f7 60px); }
 .gray { background: linear-gradient(to bottom, #424242 60px, #d6d6d6 60px); }
 .cyan { background: linear-gradient(to bottom, #0097a7 60px, #d1f3f6 60px); }
 
-/* Imagens dentro do card */
+/* ======================
+   FIGURAS DENTRO DOS CARDS
+====================== */
 .card img.draggable {
   width: 50px;
   height: 50px;
@@ -98,56 +105,115 @@ body {
   cursor: grab;
 }
 
-.card-objects img:hover { transform: none !important; box-shadow: none !important; }
+.card-objects img:hover {
+  transform: none !important;
+  box-shadow: none !important;
+}
 
+/* ======================
+   COLUNA DIREITA
+====================== */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+}
 
-.image-box img { width: 150px; }
+.image-box img {
+  width: 120px;
+}
 
 .text-box h1 {
   background-color: #f0f0f0;
   border-radius: 15px;
-  padding: 20px;
-  font-size: 1.2rem;
+  padding: 15px;
+  font-size: 1rem;
   color: #333;
   font-weight: normal;
   box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  max-width: 400px;
+  max-width: 600px;
   text-align: justify;
 }
 
-/* Objects direita */
+/* ======================
+   FIGURAS DIREITA
+====================== */
 .objects {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
+  gap: 5px;
   background: #ffffff;
   border-radius: 12px;
-  padding: 10px;
+  padding: 5px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 500px;
+  max-width: 710px;
 }
 
 .objects img {
   width: 70px;
-  height: 80px;
+  height: 70px;
   object-fit: contain;
   border-radius: 10px;
   padding: 8px;
   cursor: grab;
 }
 
-/* Dragging */
+.figure-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  width: 100px;
+}
+
+/* ======================
+   DRAGGING
+====================== */
 .draggable.dragging {
   opacity: 0.5;
   transform: none !important;
   transition: none !important;
 }
 
-/* Apenas Dispositivos Médicos terá duas colunas */
+/* ======================
+   CARDS COM DUAS COLUNAS
+====================== */
 .card.two-columns .card-objects {
   display: grid !important;
   grid-template-columns: repeat(2, 1fr);
   gap: 5px;
   justify-items: center;
+}
+
+/* ======================
+   RESPONSIVIDADE
+====================== */
+@media (max-width: 700px) {
+  .cards {
+    grid-template-columns: repeat(2, 150px);
+    gap: 40px 40px;
+  }
+  .card { width: 150px; min-height: 200px; padding-top: 50px; }
+  .icon { width: 45px; height: 45px; top: -22px; }
+  .icon img { max-width: 28px; }
+  .card h3 { font-size: 1rem; }
+  .card img.draggable { width: 38px; height: 38px; }
+  .objects { gap: 8px; padding: 8px; }
+  .figure-item { width: 65px; }
+  .figure-item img { max-width: 50px; }
+  .figure-item p { font-size: 11px; }
+}
+
+@media (max-width: 450px) {
+  .cards {
+    grid-template-columns: repeat(2, 120px);
+    gap: 30px 30px;
+  }
+  .card { width: 120px; min-height: 180px; padding-top: 40px; }
+  .icon { width: 35px; height: 35px; top: -18px; }
+  .icon img { max-width: 22px; }
+  .card h3 { font-size: 0.9rem; }
+  .card img.draggable { width: 35px; height: 35px; }
 }
