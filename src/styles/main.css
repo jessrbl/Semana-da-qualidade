@@ -152,21 +152,25 @@ body {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 2px;
+  gap: 10px;
   background: #ffffff;
   border-radius: 12px;
-  padding: 5px;
+  padding: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-  max-width: 710px;
+  max-width: 550px;
 }
 
 .objects img {
-  width: 70px;
-  height: 30px;
+  width: 50px;
+  height: 50px;
   object-fit: contain;
   border-radius: 10px;
-  padding: 5px;
+  padding: 3px;
   cursor: grab;
+}
+
+.objects p {
+  font-size: 0.5rem;
 }
 
 .figure-item {
@@ -174,7 +178,7 @@ body {
   flex-direction: column;
   align-items: center;
   text-align: center;
-  width: 70px;
+  width: 60px;
 }
 
 /* ======================
@@ -196,24 +200,6 @@ body {
   justify-items: center;
 }
 
-/* ======================
-   RESPONSIVIDADE
-====================== */
-@media (max-width: 700px) {
-  .cards {
-    grid-template-columns: repeat(2, 150px);
-    gap: 40px 40px;
-  }
-  .card { width: 150px; min-height: 200px; padding-top: 50px; }
-  .icon { width: 45px; height: 45px; top: -22px; }
-  .icon img { max-width: 28px; }
-  .card h3 { font-size: 1rem; }
-  .card img.draggable { width: 38px; height: 38px; }
-  .objects { gap: 8px; padding: 8px; }
-  .figure-item { width: 65px; }
-  .figure-item img { max-width: 50px; }
-  .figure-item p { font-size: 11px; }
-}
 
 @media (max-width: 450px) {
   .cards {
