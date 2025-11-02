@@ -28,7 +28,7 @@
 
 
 .box-container {
-  margin-top: 5vh;
+  margin-top: 3vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,7 +76,6 @@
 }
 
 .cards-box {
-  margin-top: 10px;
   gap: 50px;
 }
 
