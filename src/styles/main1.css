@@ -145,3 +145,7 @@
   color: rgba(255, 255, 255, 0.9);
   font-size: 1em;
 }
+
+.card-content li::marker {
+  color: rgba(255, 255, 255, 0.9);
+}
