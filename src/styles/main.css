@@ -105,16 +105,27 @@ body {
   cursor: grab;
 }
 
-.draggable.dragging {
-  position: absolute !important; /* necessário para seguir o dedo */
-  z-index: 1000;
-  pointer-events: none; /* evita problemas de toque em outros elementos */
-  opacity: 0.8;
-  transform: none !important; /* remove qualquer translate */
-  width: auto; /* mantém tamanho original */
-  height: auto;
+.draggable {
+  width: 50px;
+  height: 50px;
+  object-fit: contain;
+  cursor: grab;
+  /* remove padding e margin que atrapalham */
+  margin: 0;
+  padding: 0;
+  border: none;
 }
 
+.draggable.dragging {
+  opacity: 0.8;
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
 
 .card-objects img:hover {
   transform: none !important;
