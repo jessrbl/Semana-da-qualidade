@@ -116,12 +116,14 @@ function verificarFinal() {
   }
 }
 
-// ----------------------
-// Mostra resultado final no container .objects
-// ----------------------
 function mostrarResultadoNoObjects(percentual) {
   const objectsContainer = document.querySelector(".objects");
-  objectsContainer.innerHTML = "";
+  objectsContainer.innerHTML = ""; // limpa figuras
+
+  // mantém o container como flex vertical
+  objectsContainer.style.display = "flex";
+  objectsContainer.style.flexDirection = "column";
+  objectsContainer.style.alignItems = "center";
 
   const resultadoTexto = document.createElement("div");
   resultadoTexto.style.textAlign = "center";
@@ -148,18 +150,9 @@ function mostrarResultadoNoObjects(percentual) {
 
     btn.addEventListener("mouseover", () => btn.style.backgroundColor = "#45a049");
     btn.addEventListener("mouseout", () => btn.style.backgroundColor = "#4CAF50");
+
     btn.addEventListener("click", () => location.reload());
   }
 
   objectsContainer.appendChild(resultadoTexto);
 }
-
-// ----------------------
-// Adiciona eventos Touch
-// ----------------------
-const figures = document.querySelectorAll(".draggable");
-figures.forEach(img => {
-  img.addEventListener("touchstart", touchStartHandler, { passive: false });
-  img.addEventListener("touchmove", touchMoveHandler, { passive: false });
-  img.addEventListener("touchend", touchEndHandler);
-});
