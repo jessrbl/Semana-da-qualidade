@@ -37,43 +37,53 @@ mantê-los em bom estado</p>
 elaborados, com finalidade profilática, curativa, paliativa ou para
 fins de diagnóstico.</p>
       <p class="ref"><strong>Referência:</strong> Lei Nº. 5.991, de 17 de dezembro de 1973</p>
-
-
     </div>
   `,
   "SANEANTES": `
     <div class="card-content">
       <p><strong> Saneantes </strong> domissanitários
-são “substâncias ou preparações destinadas à higienização,
+são "substâncias ou preparações destinadas à higienização,
 desinfecção ou desinfestação domiciliar, em ambientes
 coletivos e/ou públicos, em lugares de uso comum e no
-tratamento da água”. Também podem ser definidos como 
-“substâncias ou preparações destinadas à
+tratamento da água". Também podem ser definidos como 
+"substâncias ou preparações destinadas à
 aplicação em objetos, tecidos, superfícies inanimadas e
 ambientes, com finalidade de limpeza e afins, desinfecção,
 desinfestação, sanitização, desodorização e odorização, além
 de desinfecção de água para o consumo humano,
-hortifrutícolas e piscinas”.</p>
+hortifrutícolas e piscinas".</p>
       <p class="ref"><strong>Referência:</strong> Lei nº. 6.360/1976 e RDC nº. 59/2010</p>
     </div>
   `
 };
 
 document.querySelectorAll(".card").forEach(card => {
-  // Guarda o título original no atributo data-titulo
   const titulo = card.querySelector("h3").textContent;
   card.setAttribute("data-titulo", titulo);
 
   card.addEventListener("click", () => {
-    // Verifica se o card está mostrando o título ou a descrição
     const temConteudo = card.querySelector(".card-content");
 
     if (temConteudo) {
       // Se está mostrando a descrição, volta para o título
       card.innerHTML = `<h3>${card.getAttribute("data-titulo")}</h3>`;
+      card.style.minHeight = "12vh"; // Resetar altura
     } else {
       // Se está mostrando o título, mostra a descrição
       card.innerHTML = descriptions[card.getAttribute("data-titulo")];
+      card.style.minHeight = "auto"; // Permitir que expanda conforme conteúdo
     }
+    
+    // Forçar reflow para garantir que o scroll funcione
+    setTimeout(() => {
+      document.body.style.overflow = 'auto';
+      document.documentElement.style.overflow = 'auto';
+    }, 10);
   });
+});
+
+// Garantir que o scroll esteja ativado ao carregar a página
+document.addEventListener('DOMContentLoaded', function() {
+  document.body.style.overflow = 'auto';
+  document.documentElement.style.overflow = 'auto';
 });
