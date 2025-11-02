@@ -13,7 +13,7 @@
 }
 
 .image-container {
-    width: 70px;
+    width: 60px;
     height: auto;
     flex-shrink: 0;
 }
@@ -27,7 +27,7 @@
 .page-title {
     color: white;
     font-family: Arial, sans-serif;
-    font-size: 1rem;
+    font-size: 0.8rem;
     font-weight: bold;
     text-align: center;
     margin: 0;
@@ -48,10 +48,10 @@
     border-radius: 25px;
     text-decoration: none;
     font-family: Arial, sans-serif;
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     font-weight: bold;
     transition: all 0.3s ease;
-    border: 2px solid white;
+    border: 1px solid white;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 }
 
