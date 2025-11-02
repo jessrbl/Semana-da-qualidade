@@ -13,12 +13,47 @@ body {
 ====================== */
 .main-container {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  flex-direction: row; /* esquerda e direita lado a lado */
+  justify-content: space-between; /* mantém colunas nos cantos */
   align-items: flex-start;
-  gap: 40px; /* distância horizontal entre cards e coluna direita */
+  gap: 40px; /* distância horizontal entre left e right */
   width: 90vw;
   margin: 30px auto;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+}
+
+.image-box img {
+  width: 180px;
+}
+
+.text-box h1 {
+  background-color: #f0f0f0;
+  border-radius: 15px;
+  padding: 15px;
+  font-size: 0.8rem;
+  color: #333;
+  font-weight: normal;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  max-width: 500px;
+  text-align: justify;
+}
+
+/* ======================
+   COLUNA DIREITA
+====================== */
+.right-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 30px;
+  position: relative; /* evita que o drag altere o layout */
+  min-width: 300px; /* impede que encolha demais */
 }
 
 /* ======================
@@ -27,7 +62,7 @@ body {
 .cards {
   display: grid;
   grid-template-columns: repeat(2, 230px);
-  gap: 60px 100px; /* 60px vertical, 80px horizontal */
+  gap: 60px 100px; /* 60px vertical, 100px horizontal */
 }
 
 .card {
@@ -41,7 +76,7 @@ body {
   padding-top: 60px;
   gap: 10px;
   box-shadow: 0 3px 8px rgba(0,0,0,0.1);
-  background: #eaeaea; /* fallback caso o gradiente falhe */
+  background: #eaeaea;
 }
 
 .card-objects {
@@ -105,68 +140,6 @@ body {
   cursor: grab;
 }
 
-.draggable {
-  width: 50px;
-  height: 50px;
-  object-fit: contain;
-  cursor: grab;
-  /* remove padding e margin que atrapalham */
-  margin: 0;
-  padding: 0;
-  border: none;
-}
-
-.draggable.dragging {
-  opacity: 0.8;
-  position: absolute;
-  z-index: 1000;
-  pointer-events: none;
-  left: 0;
-  top: 0;
-  margin: 0;
-  padding: 0;
-}
-
-.card-objects img:hover {
-  transform: none !important;
-  box-shadow: none !important;
-}
-
-/* ======================
-   COLUNA DIREITA
-====================== */
-.right-column {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 30px;
-}
-
-.left-column {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: row;
-  gap: 30px;
-
-}
-
-.image-box img {
-  width: 180px;
-}
-
-.text-box h1 {
-  background-color: #f0f0f0;
-  border-radius: 15px;
-  padding: 15px;
-  font-size: 0.8rem;
-  color: #333;
-  font-weight: normal;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  max-width: 500px;
-  text-align: justify;
-}
-
 /* ======================
    FIGURAS DIREITA
 ====================== */
@@ -180,6 +153,7 @@ body {
   padding: 8px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
   max-width: 550px;
+  position: relative; /* mantém posição durante o drag */
 }
 
 .objects img {
@@ -203,6 +177,22 @@ body {
   width: 60px;
 }
 
+/* ======================
+   DRAGGING (mobile)
+====================== */
+.draggable.dragging {
+  opacity: 0.8;
+  position: fixed; /* segue o dedo */
+  z-index: 1000;
+  pointer-events: none;
+  left: 0;
+  top: 0;
+  margin: 0;
+  padding: 0;
+  width: 50px;   /* mantém o tamanho original */
+  height: 50px;  /* mantém o tamanho original */
+  object-fit: contain;
+}
 
 /* ======================
    CARDS COM DUAS COLUNAS
@@ -214,7 +204,9 @@ body {
   justify-items: center;
 }
 
-
+/* ======================
+   MEDIA QUERIES
+====================== */
 @media (max-width: 450px) {
   .cards {
     grid-template-columns: repeat(2, 120px);
