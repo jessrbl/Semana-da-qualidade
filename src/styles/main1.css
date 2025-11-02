@@ -25,6 +25,13 @@
   font-weight: normal;
 }
 
+
+.box-container {
+  margin-top: 2vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 /* ==========================
    IMAGE BOX
    ========================== */
@@ -49,11 +56,11 @@
   padding: 2vw;
   box-shadow: 0 0.5vw 1vw rgba(0,0,0,0.1);
   font-family: Arial, sans-serif;
-  font-size: 1.8vw; /* relativo à viewport */
+  font-size: 1.9vw; /* relativo à viewport */
   color: #333;
   position: relative;
   margin: 0 auto;
-  max-width: 90%;
+  max-width: 70%;
 }
 
 .text-box::after {
@@ -74,7 +81,7 @@
   border-radius: 1.5vw;
   box-shadow: 0 0.5vw 1.5vw rgba(0,0,0,0.2);
   display: flex;
-  margin-top: 1vh;
+  margin-top: 3vh;
   flex-direction: column;
   justify-content: center;
   align-items: center;
@@ -82,7 +89,7 @@
   padding: 4vw;
   color: white;
   font-family: Arial, sans-serif;
-  font-size: 1.8vw;
+  font-size: 1.2rem;
   cursor: pointer;
   min-height: 10vh;
   transition: all 0.3s ease;
@@ -95,7 +102,7 @@
 
 .card h3 {
   margin: 0 0 1vh 0;
-  font-size: 2vw;
+  font-size: 2.5vw;
   font-weight: bold;
   text-align: center;
 }

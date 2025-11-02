@@ -1,7 +1,7 @@
 .navbar {
     max-width: 100%;
     margin: auto;
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
     background-color: #0B194A;
     
     display: flex;
@@ -44,11 +44,11 @@
     display: inline-block;
     background: transparent;
     color: white;
-    padding: 8px 10px;
+    padding: 10px 10px;
     border-radius: 25px;
     text-decoration: none;
     font-family: Arial, sans-serif;
-    font-size: 0.5rem;
+    font-size: 0.9rem;
     font-weight: bold;
     transition: all 0.3s ease;
     border: 2px solid white;
