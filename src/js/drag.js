@@ -33,7 +33,7 @@ function touchMoveHandler(ev) {
   ev.preventDefault();
   const touch = ev.touches[0];
 
-  draggedElement.style.position = "fixed";
+  draggedElement.style.position = "fixed"; // fixo na tela
   draggedElement.style.left = touch.clientX - draggedElement.offsetWidth / 2 + "px";
   draggedElement.style.top = touch.clientY - draggedElement.offsetHeight / 2 + "px";
   draggedElement.style.zIndex = 1000;
@@ -46,7 +46,7 @@ function touchEndHandler(ev) {
   const touch = ev.changedTouches[0];
   draggedElement.classList.remove("dragging");
 
-  // Remove placeholder
+  // Remove placeholder e mantém fluxo do layout
   if (placeholder) {
     placeholder.remove();
     placeholder = null;
@@ -76,15 +76,17 @@ function touchEndHandler(ev) {
     } else {
       totalErros++;
       alert("Figura não corresponde a este card!");
+      // volta para container original
       const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
       if (originalParent) originalParent.appendChild(draggedElement);
     }
   } else {
+    // fora de qualquer card, volta para container original
     const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
     if (originalParent) originalParent.appendChild(draggedElement);
   }
 
-  // Reseta estilos
+  // reseta estilos
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
@@ -108,13 +110,14 @@ function verificarFinal() {
   });
 
   if (colocadas === totalFiguras) {
+    // calcula percentual de acertos
     const percentual = Math.round(((totalTentativas - totalErros) / totalTentativas) * 100);
     mostrarResultadoNoObjects(percentual);
   }
 }
 
 // ----------------------
-// Mostrar resultado + gabarito
+// Mostra resultado final no container .objects
 // ----------------------
 function mostrarResultadoNoObjects(percentual) {
   const objectsContainer = document.querySelector(".objects");
