@@ -33,7 +33,7 @@ function touchMoveHandler(ev) {
   ev.preventDefault();
   const touch = ev.touches[0];
 
-  draggedElement.style.position = "fixed"; // fixo na tela
+  draggedElement.style.position = "fixed";
   draggedElement.style.left = touch.clientX - draggedElement.offsetWidth / 2 + "px";
   draggedElement.style.top = touch.clientY - draggedElement.offsetHeight / 2 + "px";
   draggedElement.style.zIndex = 1000;
@@ -46,7 +46,7 @@ function touchEndHandler(ev) {
   const touch = ev.changedTouches[0];
   draggedElement.classList.remove("dragging");
 
-  // Remove placeholder e mantém fluxo do layout
+  // Remove placeholder
   if (placeholder) {
     placeholder.remove();
     placeholder = null;
@@ -76,17 +76,15 @@ function touchEndHandler(ev) {
     } else {
       totalErros++;
       alert("Figura não corresponde a este card!");
-      // volta para container original
       const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
       if (originalParent) originalParent.appendChild(draggedElement);
     }
   } else {
-    // fora de qualquer card, volta para container original
     const originalParent = document.querySelector(`.${draggedElement.dataset.initialParent} .objects`);
     if (originalParent) originalParent.appendChild(draggedElement);
   }
 
-  // reseta estilos
+  // Reseta estilos
   draggedElement.style.position = "";
   draggedElement.style.left = "";
   draggedElement.style.top = "";
@@ -110,21 +108,20 @@ function verificarFinal() {
   });
 
   if (colocadas === totalFiguras) {
-    // calcula percentual de acertos
     const percentual = Math.round(((totalTentativas - totalErros) / totalTentativas) * 100);
     mostrarResultadoNoObjects(percentual);
   }
 }
 
 // ----------------------
-// Mostra resultado final no container .objects
+// Mostrar resultado + gabarito
 // ----------------------
 function mostrarResultadoNoObjects(percentual) {
   const objectsContainer = document.querySelector(".objects");
   objectsContainer.innerHTML = "";
 
   const resultadoTexto = document.createElement("div");
-  resultadoTexto.className = "resultado-container"; // Adicione uma classe
+  resultadoTexto.className = "resultado-container";
   resultadoTexto.style.textAlign = "center";
   resultadoTexto.style.padding = "20px";
   resultadoTexto.style.borderRadius = "12px";
@@ -161,8 +158,44 @@ function mostrarResultadoNoObjects(percentual) {
   }
 
   objectsContainer.appendChild(resultadoTexto);
-  
-  // Garantir que a right-column mantenha o alinhamento
+
+  // -----------------------------
+  // GABARITO
+  // -----------------------------
+  const gabaritoDiv = document.createElement("div");
+  gabaritoDiv.style.textAlign = "left";
+  gabaritoDiv.style.padding = "20px";
+  gabaritoDiv.style.borderRadius = "12px";
+  gabaritoDiv.style.background = "#f9f9f9";
+  gabaritoDiv.style.width = "100%";
+  gabaritoDiv.style.marginTop = "20px";
+
+  gabaritoDiv.innerHTML = `<h2>Gabarito 📝</h2>`;
+
+  const allCards = document.querySelectorAll(".card");
+  allCards.forEach(card => {
+    const cardTitle = card.querySelector("h3").textContent;
+    const aceitaveis = card.dataset.accept?.split(",").map(s => s.trim()) || [];
+
+    const ul = document.createElement("ul");
+    aceitaveis.forEach(id => {
+      const figura = document.getElementById(id);
+      const nome = figura ? figura.nextElementSibling?.textContent || id : id;
+      const li = document.createElement("li");
+      li.textContent = nome;
+      ul.appendChild(li);
+    });
+
+    const cardDiv = document.createElement("div");
+    cardDiv.style.marginBottom = "15px";
+    cardDiv.innerHTML = `<strong>${cardTitle}:</strong>`;
+    cardDiv.appendChild(ul);
+    gabaritoDiv.appendChild(cardDiv);
+  });
+
+  objectsContainer.appendChild(gabaritoDiv);
+
+  // Mantém alinhamento da right-column
   const rightColumn = document.querySelector('.right-column');
   rightColumn.style.display = 'flex';
   rightColumn.style.flexDirection = 'column';
